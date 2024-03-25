@@ -2,11 +2,16 @@ import Image from 'next/image';
 
 import { getMeal } from '@/lib/meals';
 import classes from './page.module.css';
+import { notFound } from 'next/navigation';
 
 // 모든 page.js는 params 값을 자동으로 받게 된다.
 // [mealsSlug] 안에 들어간 'mealsSlug'가 key 값이 된다.
 export default function MealDetailsPage({ params }) {
   const meal = getMeal(params.mealSlug);
+
+  if (!meal) {
+    notFound();
+  }
 
   meal.instructions = meal.instructions.replace(/\n/g, '<br />');
 
